@@ -22,6 +22,7 @@ import com.revature.models.ItemType;
 import com.revature.models.Ledger;
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.repositories.ItemDAO;
 import com.revature.repositories.LedgerDAO;
 import com.revature.services.LedgerService;
 
@@ -32,7 +33,10 @@ class LedgerServiceTest {
 	LedgerService ledgerService;
 
 	@Mock
-	LedgerDAO dao;
+	LedgerDAO ledgerDAO;
+	
+	@Mock
+	ItemDAO itemDAO;
 
 	Item testItem = new Item(1, "Steak", ItemType.Meat, BigDecimal.valueOf(3.99), BigDecimal.valueOf(9.99), 10,
 			LocalDateTime.now());
@@ -40,6 +44,13 @@ class LedgerServiceTest {
 
 	@BeforeAll
 	public static void init() {
+	}
+	
+	@Test
+	void makeTransactionTest() {
+		Ledger transaction = new Ledger();
+		ledgerDAO.save(transaction);
+		verify(ledgerDAO, times(1)).save(transaction);
 	}
 
 	@Test
@@ -53,11 +64,36 @@ class LedgerServiceTest {
 		list.add(transactionTwo);
 		list.add(transactionThree);
 
-		when(dao.findAll()).thenReturn(list);
+		when(ledgerDAO.findAll()).thenReturn(list);
 
 		List<Ledger> transactions = ledgerService.findAll();
 
 		assertEquals(3, transactions.size());
-		verify(dao, times(1)).findAll();
+		verify(ledgerDAO, times(1)).findAll();
 	}
+	
+	@Test
+	void deleteTransactionTest() {
+		
+		List<Ledger> list = new ArrayList<Ledger>();
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
+		Ledger transactionTwo = new Ledger(2, testItem, testUser, 17, BigDecimal.valueOf(3.20), LocalDateTime.now());
+		Ledger transactionThree = new Ledger(3, testItem, testUser, 8, BigDecimal.valueOf(42.20), LocalDateTime.now());
+
+		list.add(transactionOne);
+		list.add(transactionTwo);
+		list.add(transactionThree);
+		
+		ledgerService.deleteTransaction(transactionThree);
+		
+		when(ledgerDAO.findAll()).thenReturn(list);
+
+		List<Ledger> transactions = ledgerService.findAll();
+
+		assertEquals(2, transactions.size());
+		verify(ledgerDAO, times(1)).findAll();
+		
+	}
+	
+	
 }
