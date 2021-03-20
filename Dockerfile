@@ -13,10 +13,10 @@ FROM java:8 as runner
 # Base image only needs JRE 8
 
 # Expose port 7000 for our web-app
-EXPOSE 7000
+EXPOSE 8080
 
 # Copy the jar file from our previous stage
-COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar project2.jar
 
 # Run our program
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT [ "java", "-jar", "project2.jar" ]
