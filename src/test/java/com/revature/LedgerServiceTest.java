@@ -79,16 +79,20 @@ class LedgerServiceTest {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
 		Ledger transactionTwo = new Ledger(2, testItem, testUser, 17, BigDecimal.valueOf(3.20), LocalDateTime.now());
 		Ledger transactionThree = new Ledger(3, testItem, testUser, 8, BigDecimal.valueOf(42.20), LocalDateTime.now());
+		
+		//ledgerService.deleteTransaction(transactionThree);
+		System.out.println(transactionThree);
 
 		list.add(transactionOne);
 		list.add(transactionTwo);
 		list.add(transactionThree);
 		
-		ledgerService.deleteTransaction(transactionThree);
 		
 		when(ledgerDAO.findAll()).thenReturn(list);
 
 		List<Ledger> transactions = ledgerService.findAll();
+		ledgerDAO.delete(transactionThree);
+
 
 		assertEquals(2, transactions.size());
 		verify(ledgerDAO, times(1)).findAll();
