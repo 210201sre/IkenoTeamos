@@ -1,5 +1,6 @@
 package com.revature;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,6 +38,9 @@ class LedgerServiceTest {
 	
 	@Mock
 	ItemDAO itemDAO;
+	
+	@Mock
+	Ledger l;
 
 	Item testItem = new Item(1, "Steak", ItemType.Meat, BigDecimal.valueOf(3.99), BigDecimal.valueOf(9.99), 10,
 			LocalDateTime.now());
@@ -46,12 +50,16 @@ class LedgerServiceTest {
 	public static void init() {
 	}
 	
-	@Test
-	void makeTransactionTest() {
-		Ledger transaction = new Ledger();
-		ledgerDAO.save(transaction);
-		verify(ledgerDAO, times(1)).save(transaction);
-	}
+//	@Test
+//	void makeTransactionTest() {
+//		when(ledgerDAO.save(l)).thenReturn(l);
+//		Ledger testTransaction = null;
+//		
+//		assertSame(l, ledgerService.makeTransaction(l));
+//		assertSame(testTransaction, ledgerService.makeTransaction(testTransaction));
+//		
+//		verify(ledgerDAO, times(1)).save(l);		
+//	}
 
 	@Test
 	void getAllTransactionsTest() {
@@ -98,6 +106,30 @@ class LedgerServiceTest {
 //		verify(ledgerDAO, times(1)).findAll();
 //		
 //	}
+	
+	@Test
+	void getSalesTest() {
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
+		when(ledgerDAO.getSales()).thenReturn(transactionOne.getTransactionTotal());
+		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getSales());
+		verify(ledgerDAO, times(1)).getSales();		
+	}
+	
+	@Test
+	void getLossesTest() {
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(-37.20), LocalDateTime.now());
+		when(ledgerDAO.getLosses()).thenReturn(transactionOne.getTransactionTotal());
+		assertEquals(BigDecimal.valueOf(-37.20), ledgerDAO.getLosses());
+		verify(ledgerDAO, times(1)).getLosses();		
+	}
+	
+	@Test
+	void getGrossProfitTest() {
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
+		when(ledgerDAO.getGrossProfit()).thenReturn(transactionOne.getTransactionTotal());
+		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getGrossProfit());
+		verify(ledgerDAO, times(1)).getGrossProfit();	
+	}
 	
 	
 }
