@@ -16,8 +16,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.source>11</maven.compiler.source>
+
 		<!-- Obtained from Sonarcloud -->
 		<sonar.projectKey>210201sre_IkenoTeamos</sonar.projectKey>
 		<sonar.organization>210201sre</sonar.organization>
