@@ -55,6 +55,28 @@
     environment{
       DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
     }
+
+    stages{
+      stage('Build Docker Image'){
+        steps {
+          script {
+            app = docker.build(DOCKER_IMAGE_NAME)
+          }
+        }
+      }
+
+      stage('Push Docker Image'){
+        steps {
+          script {
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-jenkins-token-ikenosteamos'){
+              app.push('latest')
+              app.push("${env.BUILD_NUMBER}")
+              app.push("${env.GIT_COMMIT}")
+            }
+          }
+        }
+      }
+    }
         
     // stages {
     //     stage('Step 1') {
