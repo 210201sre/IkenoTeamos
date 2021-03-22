@@ -7,6 +7,7 @@ COPY pom.xml pom.xml
 COPY src/ src/
 
 # Build our application
+#test
 
 RUN mvn clean package -e -X
 
@@ -14,7 +15,7 @@ RUN mvn clean package -e -X
 FROM java:8 as runner
 # Base image only needs JRE 8
 
-# Expose port 7000 for our web-app
+# Expose port 8080 for our web-app
 EXPOSE 8080
 
 # Copy the jar file from our previous stage
