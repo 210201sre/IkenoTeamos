@@ -22,9 +22,9 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
 		<!-- We can configure some additional properties for test coverage reports -->
-		 <coverage.reports.dir>target/coverage-reports</coverage.reports.dir>
+		<coverage.reports.dir>target/coverage-reports</coverage.reports.dir>
 		<!-- <coverage.reports.dir>target/site/jacoco/</coverage.reports.dir> -->
-		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>target/coverage-reports/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
 		<!-- This configuration excludes certain packages from being analyzed -->
 		<!-- This is helpful because Project2 only has requirements for test coverage 
@@ -100,6 +100,14 @@
 			<artifactId>logback-more-appenders</artifactId>
 			<version>1.8.4</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.6</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
