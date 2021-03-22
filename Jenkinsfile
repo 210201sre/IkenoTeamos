@@ -51,30 +51,34 @@
           """
         }
     }
-        
-    stages {
-        stage('Step 1') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-jenkins-token') {
-                        sh 'docker images -a'
-                        
-                        sh 'docker pull ikenoxamos/project1:latest'
-                        
-                        app = docker.image("ikenoxamos/project1")
-                        app.push("latest")
-                    }
-                    
-                    container('kubectl') {
-                      withKubeConfig([credentialsId: 'kubeconfig']) {
-                          sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
-                          sh 'kubectl get pods'
-                          // The syntax below might be slightly off
-                          sh "kubectl patch deployment deployment-name --set-image=$IMAGE_NAME:$IMAGE_TAG"
-                      }
-                    }
-                }
-            }
-        }
+
+    environment{
+      DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
     }
+        
+    // stages {
+    //     stage('Step 1') {
+    //         steps {
+    //             script {
+    //                 docker.withRegistry('https://registry.hub.docker.com', 'docker-jenkins-token') {
+    //                     sh 'docker images -a'
+                        
+    //                     sh 'docker pull ikenoxamos/project1:latest'
+                        
+    //                     app = docker.image("ikenoxamos/project1")
+    //                     app.push("latest")
+    //                 }
+                    
+    //                 container('kubectl') {
+    //                   withKubeConfig([credentialsId: 'kubeconfig']) {
+    //                       sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
+    //                       sh 'kubectl get pods'
+    //                       // The syntax below might be slightly off
+    //                       sh "kubectl patch deployment deployment-name --set-image=$IMAGE_NAME:$IMAGE_TAG"
+    //                   }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
