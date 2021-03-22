@@ -67,6 +67,9 @@
       }
 
       stage('Sonar Quality Analysis') {
+          tools{
+            jdk "jdk11"
+          }
           steps {
               sh 'java -version'
               sh 'chmod +x mvnw'
