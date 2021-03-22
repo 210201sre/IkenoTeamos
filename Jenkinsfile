@@ -20,10 +20,10 @@
                 value: tcp://localhost:2375
               resources:
                 requests:
-                  memory: "900Mi"
+                  memory: "1900Mi"
                   cpu: "0.3"
                 limits:
-                  memory: "999Mi"
+                  memory: "2000Mi"
                   cpu: "0.5"
             - name: dind-daemon
               image: docker:18-dind
@@ -35,10 +35,10 @@
                 mountPath: /var/lib/docker
               resources:
                 requests:
-                  memory: "900Mi"
+                  memory: "1900Mi"
                   cpu: "0.3"
                 limits:
-                  memory: "999Mi"
+                  memory: "2000Mi"
                   cpu: "0.5"
             - name: kubectl
               image: jshimko/kube-tools-aws:latest
