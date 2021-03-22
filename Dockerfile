@@ -16,7 +16,7 @@ FROM java:8 as runner
 EXPOSE 8080
 
 # Copy the jar file from our previous stage
-COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar project2.jar
+COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar ikenos-teamos.jar
 
 # Run our program
-ENTRYPOINT [ "java", "-jar", "project2.jar" ]
+ENTRYPOINT [ "java", "-jar", "ikenos-teamos.jar" ]
