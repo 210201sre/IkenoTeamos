@@ -9,7 +9,7 @@ COPY pom.xml pom.xml
 COPY src/ src/
 
 # Build our application
-RUN chmod +x mvnw
+# RUN chmod +x mvnw
 RUN mvn clean package
 
 # As a separate stage, to save on resulting image size, we discard everything from previous stages
