@@ -60,22 +60,41 @@ public class LedgerService {
 	}
 	
 	public BigDecimal getGrossProfit() {
+		BigDecimal profit;
 		MDC.put("event", "Obtaining gross profit");
-		BigDecimal profit = ledgerDAO.getGrossProfit();
+		if (ledgerDAO.getGrossProfit() == null) {
+			profit = BigDecimal.valueOf(0);
+		}
+		else {
+			profit = ledgerDAO.getGrossProfit();
+		}
 		log.info("Obtained Gross Profit: $" + profit.toString());
 		return ledgerDAO.getGrossProfit();
 	}
 	
 	public BigDecimal getLosses() {
+		BigDecimal losses;
 		MDC.put("event", "Obtaining losses");
-		BigDecimal losses = ledgerDAO.getLosses();
+		if (ledgerDAO.getSales() == null) {
+			losses = BigDecimal.valueOf(0);
+		}
+		else {
+			losses = ledgerDAO.getLosses();
+		}
+		
 		log.info("Obtained Losses: $" + losses.toString());
 		return ledgerDAO.getLosses();
 	}
 	
 	public BigDecimal getSales() {
+		BigDecimal sales;
 		MDC.put("event", "Obtaining sales");
-		BigDecimal sales = ledgerDAO.getSales();
+		if (ledgerDAO.getSales() == null) {
+			sales = BigDecimal.valueOf(0);			
+		}
+		else {
+			sales = ledgerDAO.getSales();
+		}
 		log.info("Obtained sales: $" + sales.toString());
 		return ledgerDAO.getSales();
 	}	

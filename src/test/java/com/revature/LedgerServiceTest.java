@@ -110,15 +110,15 @@ class LedgerServiceTest {
 	@Test
 	void getSalesTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
-		when(ledgerDAO.getSales()).thenReturn(transactionOne.getTransactionTotal());
+		when(ledgerService.getSales()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getSales());
-		verify(ledgerDAO, times(1)).getSales();		
+		verify(ledgerDAO, times(2)).getSales();		
 	}
 	
 	@Test
 	void getLossesTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(-37.20), LocalDateTime.now());
-		when(ledgerDAO.getLosses()).thenReturn(transactionOne.getTransactionTotal());
+		when(ledgerService.getLosses()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(-37.20), ledgerDAO.getLosses());
 		verify(ledgerDAO, times(1)).getLosses();		
 	}
@@ -126,9 +126,9 @@ class LedgerServiceTest {
 	@Test
 	void getGrossProfitTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
-		when(ledgerDAO.getGrossProfit()).thenReturn(transactionOne.getTransactionTotal());
+		when(ledgerService.getGrossProfit()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getGrossProfit());
-		verify(ledgerDAO, times(1)).getGrossProfit();	
+		verify(ledgerDAO, times(2)).getGrossProfit();	
 	}
 	
 	
