@@ -8,7 +8,7 @@ COPY src/ src/
 
 # Build our application
 
-RUN mvn clean package
+RUN mvn clean package -e
 
 # As a separate stage, to save on resulting image size, we discard everything from previous stages
 FROM java:8 as runner
