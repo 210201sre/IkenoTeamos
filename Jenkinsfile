@@ -68,6 +68,7 @@
 
       stage('Sonar Quality Analysis') {
           steps {
+              sh 'chmod +x mvnw'
               withSonarQubeEnv(credentialsId: 'sonar-ikenosteamos-token', installationName: 'sonarcloud') {
                   sh './mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
               }
