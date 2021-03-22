@@ -1,10 +1,13 @@
-# IkenoTeamos
+#IkenoTeamos 
+__Project 2: Inventory Managment__ 
 
-## Project 2
+## SLO
 
+## Features
+* 
+*
+*
+*
 
-## Inventory Managment 
+## Technologies Used
 
-### Features
-~ 1
-~ 1
