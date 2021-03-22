@@ -59,7 +59,7 @@
     stages{
       stage('Build Docker Image'){
         steps {
-          sh 'docker build $DOCKER_IMAGE_NAME'
+          sh 'docker build $DOCKER_IMAGE_NAME .'
           script {
             app = docker.build(DOCKER_IMAGE_NAME)
           }
