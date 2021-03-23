@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,6 +40,9 @@ class ItemServiceTest {
 	@Mock
 	ItemDAO itemDAO;
 	
+	@Mock
+	LedgerDAO ledgerDAO;
+	
 	Item testItem = new Item();
 	
 	@BeforeAll
@@ -49,8 +53,10 @@ class ItemServiceTest {
 	@Test
 	void addItemTest() {
 		Item i = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
-		itemDAO.save(i);
-		verify(itemDAO, times(1)).save(i);
+		itemService.addItem(i);
+		verify(itemDAO, times(2)).save(i);
+		//More test functionality needed because of Ledger stuff in ItemService.addItem()
+		
 	}
 	
 	@Test
@@ -64,8 +70,8 @@ class ItemServiceTest {
 		list.add(i2);
 		list.add(i3);
 		
-		when(itemDAO.findAll()).thenReturn(list);
-		List<Item> itemList = itemDAO.findAll();
+		when(itemService.findAll()).thenReturn(list);
+		List<Item> itemList = itemService.findAll();
 		assertEquals(3, itemList.size());
 		
 		verify(itemDAO, times(1)).findAll();
@@ -73,22 +79,30 @@ class ItemServiceTest {
 	
 	@Test
 	void findSingleItemTest() {
-		Item i = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
-		Item i2 = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
-		itemDAO.save(i);
-		itemDAO.save(i2);
-		itemDAO.findById(2);
-		verify(itemDAO, times(1)).findById(2);
+		Optional<Item> i = Optional.of(new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now()));
+		when(itemDAO.findById(1)).thenReturn(i);
+		assertEquals(i, itemService.findSingleItem(1));
+//		Item i2 = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
+//		itemService.addItem(i);
+//		itemService.addItem(i2);
+//		itemService.findSingleItem(2);
+//		verify(itemDAO, times(1)).findSingleItem(2);
 	}
 	
 	@Test
 	void deleteItemTest() {
 		Item i = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
-		Item i2 = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
-		itemDAO.save(i);
-		itemDAO.save(i2);
-		itemDAO.delete(i2);
-		verify(itemDAO, times(1)).delete(i2);
+		itemService.addItem(i);
+		itemService.deleteItem(i);
+		verify(itemDAO, times(1)).delete(i);
+	}
+	
+	@Test
+	void updateTest() {
+		//should we be grabbing an item already existing and updating it? prob not
+		Item i = new Item(1, "name", ItemType.Other, BigDecimal.ONE, BigDecimal.TEN, 1, LocalDateTime.now());
+		itemService.update(i);
+		verify(itemDAO, times(1)).save(i);
 	}
 
 }
