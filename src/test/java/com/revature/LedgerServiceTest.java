@@ -50,16 +50,13 @@ class LedgerServiceTest {
 	public static void init() {
 	}
 	
-//	@Test
-//	void makeTransactionTest() {
-//		when(ledgerDAO.save(l)).thenReturn(l);
-//		Ledger testTransaction = null;
-//		
-//		assertSame(l, ledgerService.makeTransaction(l));
-//		assertSame(testTransaction, ledgerService.makeTransaction(testTransaction));
-//		
-//		verify(ledgerDAO, times(1)).save(l);		
-//	}
+	@Test
+	void makeTransactionTest() {
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
+		ledgerService.makeTransaction(transactionOne);
+		verify(ledgerDAO, times(1)).save(transactionOne);
+
+	}
 
 	@Test
 	void getAllTransactionsTest() {

@@ -59,7 +59,7 @@
     stages{
       stage('Build Docker Image'){
         steps {
-          sh 'docker build -t $DOCKER_IMAGE_NAME .'
+          // sh 'docker build -t $DOCKER_IMAGE_NAME .'
           script {
             app = docker.build(DOCKER_IMAGE_NAME)
           }
@@ -94,8 +94,8 @@
           script {
             docker.withRegistry('https://registry.hub.docker.com', 'docker-jenkins-token-ikenosteamos'){
               app.push('latest')
-              app.push("${env.BUILD_NUMBER}")
-              app.push("${env.GIT_COMMIT}")
+              // app.push("${env.BUILD_NUMBER}")
+              // app.push("${env.GIT_COMMIT}")
             }
           }
         }
