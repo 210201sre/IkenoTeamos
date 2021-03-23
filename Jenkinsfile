@@ -79,15 +79,15 @@
           }
       }
 
-      // stage('Wait for Quality Gate') {
-      //     steps {
-      //         script {
-      //             timeout(time: 30, unit: 'MINUTES') {
-      //                 qualitygate = waitForQualityGate abortPipeline: true
-      //             }
-      //         }
-      //     }
-      // }      
+      stage('Wait for Quality Gate') {
+          steps {
+              script {
+                  timeout(time: 30, unit: 'MINUTES') {
+                      qualitygate = waitForQualityGate abortPipeline: true
+                  }
+              }
+          }
+      }      
 
       stage('Push Docker Image'){
         steps {
