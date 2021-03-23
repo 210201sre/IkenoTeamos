@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,7 +48,7 @@ class UserServiceTest {
 	@Test
 	void addUserTest() {
 		User u = new User(1, "name", Role.Customer);
-		userDAO.save(u);
+		userService.addUser(u);
 		verify(userDAO, times(1)).save(u);
 	}
 	@Test
@@ -69,22 +70,23 @@ class UserServiceTest {
 	}
 	@Test
 	void findSingleUserTest() {
-		User u = new User(1, "name", Role.Customer);
-		User u2 = new User(2, "name2", Role.Customer);
-		userDAO.save(u);
-		userDAO.save(u2);
+		Optional<User> u = Optional.of(new User(1, "John Doe", Role.Customer));
+		when(userDAO.findById(1)).thenReturn(u);
 		
-		userDAO.findById(2);
-		verify(userDAO, times(1)).findById(2);
+		assertEquals(u, userService.findSingleUser(1));
+		
 	}
+	
 	@Test
 	void deleteUserTest() {		
-		User u = new User(1, "name", Role.Customer);
-		User u2 = new User(2, "name2", Role.Customer);	
-		userDAO.save(u);
-		userDAO.save(u2);
-		
-		userDAO.delete(u2);
-		verify(userDAO, times(1)).delete(u2);
+		User u = new User(1, "name", Role.Customer);		
+		userService.deleteUser(u);
+		verify(userDAO, times(1)).delete(u);
+	}
+	
+	void updateUserTest() {
+		User u = new User(1, "John Smith", Role.Customer);
+		userService.update(u);
+		verify(userDAO, times(1)).save(u);
 	}
 }

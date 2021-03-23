@@ -35,10 +35,10 @@ class LedgerServiceTest {
 
 	@Mock
 	LedgerDAO ledgerDAO;
-	
+
 	@Mock
 	ItemDAO itemDAO;
-	
+
 	@Mock
 	Ledger l;
 
@@ -49,7 +49,7 @@ class LedgerServiceTest {
 	@BeforeAll
 	public static void init() {
 	}
-	
+
 	@Test
 	void makeTransactionTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
@@ -76,57 +76,36 @@ class LedgerServiceTest {
 		assertEquals(3, transactions.size());
 		verify(ledgerDAO, times(1)).findAll();
 	}
-	
-//	@Test
-//	void deleteTransactionTest() {
-//		
-//		List<Ledger> list = new ArrayList<Ledger>();
-//		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
-//		Ledger transactionTwo = new Ledger(2, testItem, testUser, 17, BigDecimal.valueOf(3.20), LocalDateTime.now());
-//		Ledger transactionThree = new Ledger(3, testItem, testUser, 8, BigDecimal.valueOf(42.20), LocalDateTime.now());
-//		
-//		//ledgerService.deleteTransaction(transactionThree);
-//		System.out.println(transactionThree);
-//
-//		list.add(transactionOne);
-//		list.add(transactionTwo);
-//		list.add(transactionThree);
-//		
-//		
-//		when(ledgerDAO.findAll()).thenReturn(list);
-//
-//		List<Ledger> transactions = ledgerService.findAll();
-//		ledgerDAO.delete(transactionThree);
-//
-//
-//		assertEquals(2, transactions.size());
-//		verify(ledgerDAO, times(1)).findAll();
-//		
-//	}
-	
+
+	@Test
+	void deleteTransactionTest() {
+		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
+		ledgerService.deleteTransaction(transactionOne);
+		verify(ledgerDAO, times(1)).delete(transactionOne);
+	}
+
 	@Test
 	void getSalesTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
 		when(ledgerService.getSales()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getSales());
-		verify(ledgerDAO, times(2)).getSales();		
+		verify(ledgerDAO, times(2)).getSales();
 	}
-	
+
 	@Test
 	void getLossesTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(-37.20), LocalDateTime.now());
 		when(ledgerService.getLosses()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(-37.20), ledgerDAO.getLosses());
-		verify(ledgerDAO, times(1)).getLosses();		
+		verify(ledgerDAO, times(1)).getLosses();
 	}
-	
+
 	@Test
 	void getGrossProfitTest() {
 		Ledger transactionOne = new Ledger(1, testItem, testUser, 20, BigDecimal.valueOf(37.20), LocalDateTime.now());
 		when(ledgerService.getGrossProfit()).thenReturn(transactionOne.getTransactionTotal());
 		assertEquals(BigDecimal.valueOf(37.20), ledgerDAO.getGrossProfit());
-		verify(ledgerDAO, times(2)).getGrossProfit();	
+		verify(ledgerDAO, times(2)).getGrossProfit();
 	}
-	
-	
+
 }
