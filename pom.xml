@@ -36,7 +36,7 @@
 			to store data -->
 		<!-- We don't have to unit test our models, because there is no logic -->
 		<sonar.exclusions>src/**/models/**/*, src/**/controllers/**/*,
-			src/**/repositories/**/*</sonar.exclusions>
+			src/**/repositories/**/*,  src/main/java/com/revature/Project1Application.java</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -144,6 +144,7 @@
 							the exclusions -->
 						<exclude>**/models/**</exclude>
 						<exclude>**/controllers/**</exclude>
+						<exclude> src/main/java/com/revature/Project1Application.java</exclude>
 					</excludes>
 				</configuration>
 				<executions>

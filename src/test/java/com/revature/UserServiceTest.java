@@ -63,11 +63,12 @@ class UserServiceTest {
 		list.add(u3);
 		
 		when(userDAO.findAll()).thenReturn(list);	
-		List<User> userList = userDAO.findAll();
+		List<User> userList = userService.findAll();
 		assertEquals(3, userList.size());
 		
 		verify(userDAO, times(1)).findAll();
 	}
+	
 	@Test
 	void findSingleUserTest() {
 		Optional<User> u = Optional.of(new User(1, "John Doe", Role.Customer));
