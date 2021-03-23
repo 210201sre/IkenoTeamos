@@ -36,7 +36,7 @@ public class LedgerService {
 		l.setTransactionTime(time);
 		ledgerDAO.save(l);
 		int transactionQuantity = l.getTransactionQuantity();
-		BigDecimal buyPrice;
+		BigDecimal buyPrice = itemDAO.getBuyPrice(ledgerDAO.getItemID(l.getTransactionID()));
 		if (itemDAO.getBuyPrice(ledgerDAO.getItemID(l.getTransactionID())) == null) {
 			buyPrice = BigDecimal.valueOf(0);
 		}
@@ -88,7 +88,7 @@ public class LedgerService {
 		else {
 			losses = ledgerDAO.getLosses();
 		}
-		
+
 		log.info("Obtained Losses: $" + losses.toString());
 		return ledgerDAO.getLosses();
 	}
@@ -102,6 +102,7 @@ public class LedgerService {
 		else {
 			sales = ledgerDAO.getSales();
 		}
+
 		log.info("Obtained sales: $" + sales.toString());
 		return ledgerDAO.getSales();
 	}	
