@@ -5,6 +5,7 @@ metadata:
   namespace: ikenos-teamos
   labels:
     app: ikenos-teamos
+    release: prometheus
 spec:
   selector:
     matchLabels:
@@ -13,5 +14,8 @@ spec:
     matchNames:
     - ikenos-teamos 
   endpoints:
-  - port: web
+  - port: http
+    path: /actuator/prometheus
+    interval: 5s
+
     
