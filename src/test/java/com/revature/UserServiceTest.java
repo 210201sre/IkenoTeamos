@@ -85,6 +85,7 @@ class UserServiceTest {
 		verify(userDAO, times(1)).delete(u);
 	}
 	
+	@Test
 	void updateUserTest() {
 		User u = new User(1, "John Smith", Role.Customer);
 		userService.update(u);

@@ -23,7 +23,7 @@ public class LedgerService {
 	@Autowired
 	private ItemDAO itemDAO;
 	
-	private static final Logger log = LoggerFactory.getLogger(ItemService.class);
+	private static final Logger log = LoggerFactory.getLogger(LedgerService.class);
 
 	
 	public Ledger makeTransaction(Ledger l) {
