@@ -110,9 +110,6 @@
 			<version>0.8.6</version>
 		</dependency>
 
-
-
-
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>

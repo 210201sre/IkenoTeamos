@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ikenos-teamos
+  namespace: ikenos-teamos
+  labels:
+    app: ikenos-teamos
+spec:
+  selector:
+    matchLabels:
+      app: ikenos-teamos
+  namespaceSelector:
+    matchNames:
+    - ikenos-teamos 
+  endpoints:
+  - port: web
+    
