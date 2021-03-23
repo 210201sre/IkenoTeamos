@@ -18,7 +18,7 @@ FROM java:8 as runner
 # Base image only needs JRE 8
 
 # Expose port 8080 for our web-app
-EXPOSE 8080
+EXPOSE 8090
 
 # Copy the jar file from our previous stage
 COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar ikenos-teamos.jar

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ikenos-teamos
+  namespace: ikenos-teamos
+  labels: 
+    app: ikenos-teamos
+spec:
+  selector: 
+    matchLabels:
+      app: ikenos-teamos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ikenos-teamos
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: fluent-conf
+      containers:
+      - name: fluentd
+        ports:
+        - containerPort: 24224
+        image: grafana/fluent-plugin-loki:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: LOKI_URL
+          value: http://loki:3100
+        volumeMounts:
+        - name: config
+          mountPath: /fluentd/etc/fluent.conf
+          subPath: fluent.conf
+      - name: ikenos-teamos
+        image: huskerhayes/ikenos-teamos
+        ports:
+        - containerPort: 8080 
+        env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: dblogin
+              key: url
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: dblogin
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dblogin
+              key: password
+        imagePullPolicy: IfNotPresent
