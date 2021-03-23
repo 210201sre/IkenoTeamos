@@ -51,7 +51,7 @@
           """
         }
     }
-    //test commen
+    //test commennt
     environment{
       DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
     }
