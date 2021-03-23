@@ -81,10 +81,13 @@
 
       stage('Wait for Quality Gate') {
           steps {
+            timeout(time: 30, unit: 'MINUTES'){
+              waitForQualityGate abortPipeline: true
+            }
               //script {
-                timeout(time: 30, unit: 'MINUTES') {
-                    qualitygate = waitForQualityGate abortPipeline: true
-                }
+                // timeout(time: 30, unit: 'MINUTES') {
+                //     qualitygate = waitForQualityGate abortPipeline: true
+                // }
               //}
           }
       }      
