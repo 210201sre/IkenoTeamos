@@ -142,4 +142,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/ow2/asm/asm-analysis/8.0.1/asm-analysis-8.0.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/ow2/asm/asm-tree/8.0.1/asm-tree-8.0.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jacoco/org.jacoco.report/0.8.6/org.jacoco.report-0.8.6.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/io/micrometer/micrometer-registry-prometheus/1.6.4/micrometer-registry-prometheus-1.6.4.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/io/prometheus/simpleclient_common/0.9.0/simpleclient_common-0.9.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/io/prometheus/simpleclient/0.9.0/simpleclient-0.9.0.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
