@@ -36,7 +36,7 @@ public class LedgerService {
 		l.setTransactionTime(time);
 		ledgerDAO.save(l);
 		int transactionQuantity = l.getTransactionQuantity();
-		BigDecimal buyPrice = itemDAO.getBuyPrice(ledgerDAO.getItemID(l.getTransactionID()));
+		BigDecimal buyPrice;
 		if (itemDAO.getBuyPrice(ledgerDAO.getItemID(l.getTransactionID())) == null) {
 			buyPrice = BigDecimal.valueOf(0);
 		}
