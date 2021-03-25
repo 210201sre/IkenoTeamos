@@ -1,5 +1,4 @@
-  pipeline {
-  
+  pipeline {  
       agent {
         kubernetes {
           label 'build-agent'
