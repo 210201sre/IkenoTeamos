@@ -10,7 +10,7 @@ metadata:
     team: sre
 spec:
   groups:
-  - name: SLOs-http_requests_total
+  - name: ikenos-teamos-SLOs-http_requests_total
     rules:
     - alert: IkenosTeamos-ErrorBudgetBurn
       annotations:
