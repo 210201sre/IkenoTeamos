@@ -15,7 +15,7 @@ spec:
     - ikenos-teamos 
   endpoints:
   - port: http
-    path: data/actuator/prometheus
+    path: /actuator/prometheus
     interval: 5s
 
     

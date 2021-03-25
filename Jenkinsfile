@@ -103,7 +103,23 @@
           }
         }
       }
+
+      stage('Kubernetes Deployment'){
+        steps{
+          script{
+            container('kubectl'){
+              withKubeConfig([credentialsId: 'kubeconfig']){
+                sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
+                sh "kubectl -n ikenos-teamos get all"
+                sh 'kubectl -n ikenos-teamos set image deployment ikenosteamos ikenosteamos=$DOCKER_IMAGE_NAME'
+              }
+            }
+          }
+        }
+      }
     }
+
+
         
     // stages {
     //     stage('Step 1') {
