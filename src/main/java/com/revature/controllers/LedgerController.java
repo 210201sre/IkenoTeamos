@@ -42,7 +42,7 @@ public class LedgerController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Ledger>> findAll(){
+	public ResponseEntity<List<Ledger>> findAll() throws InterruptedException{
 		return ResponseEntity.ok(ledgerService.findAll());
 	}
 	
