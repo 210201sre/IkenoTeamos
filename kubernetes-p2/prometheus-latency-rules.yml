@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: Ikenos-Teamos-prometheus-rules-latency
+  name: ikenos-teamos-prometheus-rules-latency
   namespace: ikenos-teamos
   labels:
     app: ikenos-teamos
@@ -12,7 +12,7 @@ spec:
   groups:
   - name: SLOs-http_request_duration_seconds
     rules:
-    - alert: LatencyBudgetBurn
+    - alert: IkenosTeamos-LatencyBudgetBurn
       annotations:
         message: 'High requests latency budget burn for job=ikenos-teamos,latency=0.5 (current value: {{ $value }})'
       expr: |
@@ -31,7 +31,7 @@ spec:
         job: ikenos-teamos
         latency: "0.5"
         severity: critical
-    - alert: LatencyBudgetBurn
+    - alert: IkenosTeamos-LatencyBudgetBurn
       annotations:
         message: 'High requests latency budget burn for job=ikenos-teamos,latency=0.5 (current value: {{ $value }})'
       expr: |

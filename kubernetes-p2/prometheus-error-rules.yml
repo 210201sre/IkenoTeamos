@@ -1,0 +1,107 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ikenos-teamos-prometheus-rules-errorbudget
+  namespace: ikenos-teamos
+  labels:
+    app: ikenos-teamos
+    job: ikenos-teamos
+    release: prometheus
+    team: sre
+spec:
+  groups:
+  - name: SLOs-http_requests_total
+    rules:
+    - alert: IkenosTeamos-ErrorBudgetBurn
+      annotations:
+        message: 'High error budget burn for job=ikenos-teamos (current value: {{ $value }})'
+      expr: |
+        sum(http_requests_total:burnrate5m{job="ikenos-teamos"}) > (14.40 * (1-0.99900))
+        and
+        sum(http_requests_total:burnrate1h{job="ikenos-teamos"}) > (14.40 * (1-0.99900))
+      for: 2m
+      labels:
+        job: ikenos-teamos
+        severity: critical
+    - alert: IkenosTeamos-ErrorBudgetBurn
+      annotations:
+        message: 'High error budget burn for job=ikenos-teamos (current value: {{ $value }})'
+      expr: |
+        sum(http_requests_total:burnrate30m{job="ikenos-teamos"}) > (6.00 * (1-0.99900))
+        and
+        sum(http_requests_total:burnrate6h{job="ikenos-teamos"}) > (6.00 * (1-0.99900))
+      for: 15m
+      labels:
+        job: ikenos-teamos
+        severity: critical
+    - alert: IkenosTeamos-ErrorBudgetBurn
+      annotations:
+        message: 'High error budget burn for job=ikenos-teamos (current value: {{ $value }})'
+      expr: |
+        sum(http_requests_total:burnrate2h{job="ikenos-teamos"}) > (3.00 * (1-0.99900))
+        and
+        sum(http_requests_total:burnrate1d{job="ikenos-teamos"}) > (3.00 * (1-0.99900))
+      for: 1h
+      labels:
+        job: ikenos-teamos
+        severity: warning
+    - alert: IkenosTeamos-ErrorBudgetBurn
+      annotations:
+        message: 'High error budget burn for job=ikenos-teamos (current value: {{ $value }})'
+      expr: |
+        sum(http_requests_total:burnrate6h{job="ikenos-teamos"}) > (1.00 * (1-0.99900))
+        and
+        sum(http_requests_total:burnrate3d{job="ikenos-teamos"}) > (1.00 * (1-0.99900))
+      for: 3h
+      labels:
+        job: ikenos-teamos
+        severity: warning
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[1d]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[1d]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate1d
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[1h]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[1h]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate1h
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[2h]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[2h]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate2h
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[30m]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[30m]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate30m
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[3d]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[3d]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate3d
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[5m]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[5m]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate5m
+    - expr: |
+        sum(rate(http_requests_total{job="ikenos-teamos",code=~"5.."}[6h]))
+        /
+        sum(rate(http_requests_total{job="ikenos-teamos"}[6h]))
+      labels:
+        job: ikenos-teamos
+      record: http_requests_total:burnrate6h
