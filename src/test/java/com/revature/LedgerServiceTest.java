@@ -17,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.revature.models.Item;
 import com.revature.models.ItemType;
@@ -27,11 +29,18 @@ import com.revature.repositories.ItemDAO;
 import com.revature.repositories.LedgerDAO;
 import com.revature.services.LedgerService;
 
-@ExtendWith(MockitoExtension.class)
-class LedgerServiceTest {
+import io.micrometer.core.instrument.MeterRegistry;
 
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+class LedgerServiceTest {
+	
+	MeterRegistry meterRegistry;
+	
+	
 	@InjectMocks
-	LedgerService ledgerService;
+	@Autowired
+	LedgerService ledgerService = new LedgerService(meterRegistry);
 
 	@Mock
 	LedgerDAO ledgerDAO;

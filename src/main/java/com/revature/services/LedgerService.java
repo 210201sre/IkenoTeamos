@@ -23,12 +23,8 @@ import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.ipc.http.HttpSender.Response;
 import io.micrometer.core.*;
 
-
 @Service
 public class LedgerService {
-	
-	Timer methodTimer;
-	private MeterRegistry meterRegistry;
 
 	@Autowired
 	private LedgerDAO ledgerDAO;
@@ -38,9 +34,17 @@ public class LedgerService {
 
 	private static final Logger log = LoggerFactory.getLogger(LedgerService.class);
 
+	Timer methodTimer;
+	private MeterRegistry meterRegistry;
+
+	@Autowired
 	public LedgerService(MeterRegistry meterRegistry) {
-		methodTimer = meterRegistry.timer("transactionTimer");
-		
+		this.meterRegistry = meterRegistry;
+		if (meterRegistry == null) {
+			methodTimer = null;
+		} else {
+			methodTimer = meterRegistry.timer("transactionTimer");
+		}
 	}
 
 	public Ledger makeTransaction(Ledger l) {
@@ -69,24 +73,20 @@ public class LedgerService {
 		log.info("Successfully created transaction");
 		return l;
 	}
-//	
-//	@Scheduled(fixedRate = 5000)
-//	@Timed(description = "Time spent accessing database", longTask = true)
-	public List<Ledger> findAll(){		
+
+
+	public List<Ledger> findAll() {
 
 		MDC.put("event", "Getting list of all Transactions in database");
 		log.info("Found list of all transactions");
-		
-		
-		return methodTimer.record(() ->{
+
+		if (meterRegistry == null) {
 			return ledgerDAO.findAll();
-		});
-		
-		
-//		List<Ledger>all = ledgerDAO.findAll();
-//		
-//		
-//		return all;
+		} else {
+			return methodTimer.record(() -> {
+				return ledgerDAO.findAll();
+			});
+		}
 	}
 
 	public void deleteTransaction(Ledger l) {
