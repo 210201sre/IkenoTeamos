@@ -20,15 +20,15 @@ public class Project1Application {
 		return new TimedAspect(registry);
 	}
 	
-	@Bean
-	public MeterFilter customizeDistributionConfig() {
-	    return new MeterFilter() {
-	        @Override
-	        public DistributionStatisticConfig configure(Meter.Id id, DistributionStatisticConfig config) {
-	            return DistributionStatisticConfig.builder().expiry(Duration.ofHours(1)).build().merge(config);
-	        }
-	    };
-	}
+//	@Bean
+//	public MeterFilter customizeDistributionConfig() {
+//	    return new MeterFilter() {
+//	        @Override
+//	        public DistributionStatisticConfig configure(Meter.Id id, DistributionStatisticConfig config) {
+//	            return DistributionStatisticConfig.builder().expiry(Duration.ofHours(1)).build().merge(config);
+//	        }
+//	    };
+//	}
 
 	public static void main(String[] args) {
 

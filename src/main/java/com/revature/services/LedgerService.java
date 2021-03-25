@@ -36,6 +36,8 @@ public class LedgerService {
 
 	Timer methodTimer;
 	private MeterRegistry meterRegistry;
+	
+//	Timer timer;
 
 	@Autowired
 	public LedgerService(MeterRegistry meterRegistry) {
@@ -43,8 +45,16 @@ public class LedgerService {
 		if (meterRegistry == null) {
 			methodTimer = null;
 		} else {
-			methodTimer = meterRegistry.timer("transactionTimer");
+//			methodTimer = meterRegistry.timer("transactionTimer");
+			methodTimer = Timer.builder("make.transaction")
+					.description("Total time database transaction takes")
+					.register(meterRegistry);
 		}
+		
+//		timer = Timer.builder("make.transaction")
+//				.tag("status", "pending")
+//				.description("Total time database transaction takes")
+//				.register(meterRegistry);
 	}
 
 	public Ledger makeTransaction(Ledger l) {

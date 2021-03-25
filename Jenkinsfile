@@ -53,12 +53,12 @@
     //test commennt
     environment{
       DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
+      DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages{
       stage('Build Docker Image'){
         steps {
-          // sh 'docker build -t $DOCKER_IMAGE_NAME .'
           script {
             app = docker.build(DOCKER_IMAGE_NAME)
           }
@@ -110,7 +110,7 @@
               withKubeConfig([credentialsId: 'kubeconfig']){
                 sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
                 sh "kubectl -n ikenos-teamos get all"
-                sh 'kubectl -n ikenos-teamos set image deployment ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME'
+                sh 'kubectl -n ikenos-teamos set image deployment ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG'
               }
             }
           }
