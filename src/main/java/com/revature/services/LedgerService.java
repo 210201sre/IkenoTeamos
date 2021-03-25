@@ -1,27 +1,21 @@
 package com.revature.services;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.revature.models.Ledger;
 import com.revature.repositories.ItemDAO;
 import com.revature.repositories.LedgerDAO;
 
-import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
-import io.micrometer.core.ipc.http.HttpSender.Response;
-import io.micrometer.core.*;
 
 @Service
 public class LedgerService {
@@ -51,10 +45,7 @@ public class LedgerService {
 					.register(meterRegistry);
 		}
 		
-//		timer = Timer.builder("make.transaction")
-//				.tag("status", "pending")
-//				.description("Total time database transaction takes")
-//				.register(meterRegistry);
+
 	}
 
 	public Ledger makeTransaction(Ledger l) {
