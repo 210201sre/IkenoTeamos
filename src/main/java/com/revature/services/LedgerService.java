@@ -39,7 +39,7 @@ public class LedgerService {
 		if (meterRegistry == null) {
 			timer = null;
 		} else {
-			timer = meterRegistry.timer("transactionTimer");
+			timer = meterRegistry.timer("transaction.timer");
 		}
 	}
 
