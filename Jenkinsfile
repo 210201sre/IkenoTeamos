@@ -78,15 +78,15 @@
           }
       }
 
-        // stage('Wait for Quality Gate') {
-        //     steps {
-        //         script {
-        //             timeout(time: 30, unit: 'MINUTES') {
-        //                 qualitygate = waitForQualityGate abortPipeline: true
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Wait for Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 30, unit: 'MINUTES') {
+                        qualitygate = waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }
 
       stage('Push Docker Image'){
         steps {
@@ -125,7 +125,7 @@
             container('kubectl'){
               withKubeConfig([credentialsId: 'kubeconfig']){
                 sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
-                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos-canary ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
                 sh "kubectl -n ikenos-teamos scale deployment ikenos-teamos-canary --replicas=$CANARY_REPLICAS"
               }
             }
