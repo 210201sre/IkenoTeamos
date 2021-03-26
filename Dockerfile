@@ -19,7 +19,7 @@ FROM java:8 as runner
 # Expose port 8080 for our web-app
 EXPOSE 8080
 
-# Copy the jar file from our previous stage
+# Copy the jar file from our previous stag
 COPY --from=builder target/project1-0.0.1-SNAPSHOT.jar ikenos-teamos.jar
 
 # Run our program
