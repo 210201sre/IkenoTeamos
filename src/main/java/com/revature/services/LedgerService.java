@@ -39,10 +39,10 @@ public class LedgerService {
 		if (meterRegistry == null) {
 			methodTimer = null;
 		} else {
-//			methodTimer = meterRegistry.timer("transactionTimer");
-			methodTimer = Timer.builder("make.transaction")
-					.description("Total time database transaction takes")
-					.register(meterRegistry);
+			methodTimer = meterRegistry.timer("transactionTimer");
+//			methodTimer = Timer.builder("make.transaction")
+//					.description("Total time database transaction takes")
+//					.register(meterRegistry);
 		}
 		
 
