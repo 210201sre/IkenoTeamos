@@ -50,7 +50,7 @@
           """
         }
     }
-    //test comment
+    //test commen
     environment{
       DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
       DOCKER_IMAGE_TAG = 'latest'
