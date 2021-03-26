@@ -1,4 +1,4 @@
-# IkenoTeamos 
+# IkenosTeamos 
 __Project 2: Inventory Managment__ 
 
 # Grocery Store Inventory Management System
