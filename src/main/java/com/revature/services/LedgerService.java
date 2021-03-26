@@ -46,7 +46,7 @@ public class LedgerService {
 
 		MDC.put("event", "making transaction");
 
-		log.info("Creating new Transaction");
+		log.info("Creating new Transaction ");
 
 		LocalDateTime time = LocalDateTime.now();
 		l.setTransactionTime(time);
