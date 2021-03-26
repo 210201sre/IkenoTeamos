@@ -22,7 +22,7 @@ public class UserService {
 	
 	public User addUser(User u) {
 		MDC.put("event", "event = Registering new user");
-		
+		// commenting and pushing
 		log.info("Registering new User");
 		
 		MDC.put("userId", "userID = " + Integer.toString(u.getUserID()));
