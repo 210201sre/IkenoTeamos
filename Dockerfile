@@ -9,7 +9,7 @@ COPY pom.xml pom.xml
 COPY src/ src/
 
 # Build our application
-#tes
+#test
 
 RUN mvn clean package
 
