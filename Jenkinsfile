@@ -20,10 +20,10 @@
               resources:
                 requests:
                   memory: "1500i"
-                  cpu: "0.5"
+                  cpu: "0.3"
                 limits:
                   memory: "2000Mi"
-                  cpu: "0.7"
+                  cpu: "0.5"
             - name: dind-daemon
               image: docker:18-dind
               workingDir: /var/lib/docker
@@ -35,10 +35,10 @@
               resources:
                 requests:
                   memory: "1500Mi"
-                  cpu: "0.5"
+                  cpu: "0.3"
                 limits:
                   memory: "2500Mi"
-                  cpu: "0.7"
+                  cpu: "0.5"
             - name: kubectl
               image: jshimko/kube-tools-aws:latest
               command:
