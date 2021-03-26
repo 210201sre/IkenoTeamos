@@ -28,7 +28,7 @@ public class LedgerService {
 
 	private static final Logger log = LoggerFactory.getLogger(LedgerService.class);
 
-	Timer methodTimer;
+	Timer timer;
 	private MeterRegistry meterRegistry;
 
 //	Timer timer;
@@ -37,13 +37,10 @@ public class LedgerService {
 	public LedgerService(MeterRegistry meterRegistry) {
 		this.meterRegistry = meterRegistry;
 		if (meterRegistry == null) {
-			methodTimer = null;
+			timer = null;
 		} else {
-//			methodTimer = meterRegistry.timer("transactionTimer");
-			methodTimer = Timer.builder("make.transaction").description("Total time database transaction takes")
-					.register(meterRegistry);
+			timer = meterRegistry.timer("transactionTimer");
 		}
-
 	}
 
 	public Ledger makeTransaction(Ledger l) {
@@ -66,11 +63,18 @@ public class LedgerService {
 		BigDecimal quantity = BigDecimal.valueOf(transactionQuantity);
 		l.setTransactionTotal(buyPrice.multiply(quantity));
 		itemDAO.updateQuantity(transactionQuantity, ledgerDAO.getItemID(l.getTransactionID()));
-		ledgerDAO.saveAndFlush(l);
-
 		MDC.put("userId", "TransactionID = " + Integer.toString(l.getTransactionID()));
 		log.info("Successfully created transaction");
-		return l;
+		
+		if (meterRegistry == null) {
+			return ledgerDAO.saveAndFlush(l);
+		}
+		else {
+			return timer.record(() -> {
+				return ledgerDAO.saveAndFlush(l);
+				
+			});
+		}
 	}
 
 	public List<Ledger> findAll() {
@@ -81,7 +85,7 @@ public class LedgerService {
 		if (meterRegistry == null) {
 			return ledgerDAO.findAll();
 		} else {
-			return methodTimer.record(() -> {
+			return timer.record(() -> {
 				return ledgerDAO.findAll();
 			});
 		}
