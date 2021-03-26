@@ -12,7 +12,7 @@
           spec:
             containers:
             - name: jnlp
-              image: ikenoxamos/jenkins-slave:latest
+              image: odavid/jenkins-jnlp-slave:jdk11
               workingDir: /home/jenkins
               env:
               - name: DOCKER_HOST
