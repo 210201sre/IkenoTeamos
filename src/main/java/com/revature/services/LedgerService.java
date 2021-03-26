@@ -31,7 +31,6 @@ public class LedgerService {
 	Timer timer;
 	private MeterRegistry meterRegistry;
 
-//	Timer timer;
 
 	@Autowired
 	public LedgerService(MeterRegistry meterRegistry) {
@@ -71,8 +70,7 @@ public class LedgerService {
 		}
 		else {
 			return timer.record(() -> {
-				return ledgerDAO.saveAndFlush(l);
-				
+				return ledgerDAO.saveAndFlush(l);				
 			});
 		}
 	}

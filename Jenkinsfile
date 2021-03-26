@@ -50,7 +50,7 @@
           """
         }
     }
-    //test commen
+
     environment{
       DOCKER_IMAGE_NAME = 'huskerhayes/ikenos-teamos'
       DOCKER_IMAGE_TAG = 'latest'
@@ -87,9 +87,6 @@
                 }
             }
         }
-      
-    
-
 
       stage('Push Docker Image'){
         steps {
@@ -103,14 +100,35 @@
         }
       }
 
-      stage('Kubernetes Deployment'){
-        steps{
+      stage('Canary Deployment'){
+        environment{
+          CANARY_REPLICAS = 1
+        }
+        steps {
           script{
             container('kubectl'){
               withKubeConfig([credentialsId: 'kubeconfig']){
                 sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
-                sh "kubectl -n ikenos-teamos get all"
-                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos-canary ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos scale deployment ikenos-teamos-canary --replicas=$CANARY_REPLICAS"
+              }
+            }
+          }
+        }
+      }
+
+      stage('Production Deployment'){
+        environment {
+          CANARY_REPLICAS = 0
+        }
+        steps{
+          input 'Is the canary ready for production?'
+          script{
+            container('kubectl'){
+              withKubeConfig([credentialsId: 'kubeconfig']){
+                sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
+                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos-canary ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos scale deployment ikenos-teamos-canary --replicas=$CANARY_REPLICAS"
               }
             }
           }
