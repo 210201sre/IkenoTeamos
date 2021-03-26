@@ -19,7 +19,7 @@
                 value: tcp://localhost:2375
               resources:
                 requests:
-                  memory: "1500i"
+                  memory: "1500Mi"
                   cpu: "0.3"
                 limits:
                   memory: "2000Mi"
