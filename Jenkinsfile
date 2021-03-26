@@ -109,7 +109,7 @@
             container('kubectl'){
               withKubeConfig([credentialsId: 'kubeconfig']){
                 sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
-                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos-canary ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos set image deployment.apps/ikenos-teamos-canary ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
                 sh "kubectl -n ikenos-teamos scale deployment ikenos-teamos-canary --replicas=$CANARY_REPLICAS"
               }
             }
@@ -127,7 +127,7 @@
             container('kubectl'){
               withKubeConfig([credentialsId: 'kubeconfig']){
                 sh "aws eks update-kubeconfig --name matt-oberlies-sre-943"
-                sh "kubectl -n ikenos-teamos set image deployment ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                sh "kubectl -n ikenos-teamos set image deployment.apps/ikenos-teamos ikenos-teamos=$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
                 sh "kubectl -n ikenos-teamos scale deployment ikenos-teamos-canary --replicas=$CANARY_REPLICAS"
               }
             }
