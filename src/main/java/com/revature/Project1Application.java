@@ -9,7 +9,6 @@ import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 
 @SpringBootApplication
-@EnablePrometheusMetrics
 public class Project1Application {
 
 	@Bean
